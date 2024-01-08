@@ -1,4 +1,7 @@
-package com.example.lota_project.DynamicPDF;
+package com.example.lota_project.DynamicPDF.service;
+
+import com.example.lota_project.DynamicPDF.dtos.PaginatedResponse;
+import com.example.lota_project.DynamicPDF.model.Transaction;
 
 import java.util.List;
 

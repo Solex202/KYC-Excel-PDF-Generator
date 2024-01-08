@@ -1,9 +1,11 @@
-package com.example.lota_project.DynamicPDF;
+package com.example.lota_project.DynamicPDF.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
@@ -14,5 +16,5 @@ public class Transaction {
     private TransactionType transactionType;
     private DynamicPDF user;
     private double amount;
-    private String transactionDate;
+    private LocalDateTime transactionDate;
 }

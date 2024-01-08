@@ -1,5 +1,9 @@
 package com.example.lota_project.DynamicPDF;
 
+import com.example.lota_project.DynamicPDF.dtos.PaginatedResponse;
+import com.example.lota_project.DynamicPDF.model.Transaction;
+import com.example.lota_project.DynamicPDF.model.TransactionType;
+import com.example.lota_project.DynamicPDF.service.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

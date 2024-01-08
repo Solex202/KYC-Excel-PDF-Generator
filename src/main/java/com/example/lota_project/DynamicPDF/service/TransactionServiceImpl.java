@@ -1,23 +1,26 @@
-package com.example.lota_project.DynamicPDF;
+package com.example.lota_project.DynamicPDF.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.lota_project.DynamicPDF.dtos.PaginatedResponse;
+import com.example.lota_project.DynamicPDF.model.Transaction;
+import com.example.lota_project.DynamicPDF.repository.TransactionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TransactionServiceImpl implements TransactionService{
+@RequiredArgsConstructor
+public class TransactionServiceImpl implements TransactionService {
 
-    @Autowired
-    private Repo repo;
+
+    private final TransactionRepository transactionRepository;
 
     @Override
     public Transaction createTransaction(Transaction transaction) {
-        return repo.save(transaction);
+        return transactionRepository.save(transaction);
     }
 
     @Override
@@ -37,23 +40,19 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public List<Transaction> getAllTransactions() {
-        return repo.findAll();
+        return transactionRepository.findAll();
     }
 
     @Override
     public PaginatedResponse getPaginatedTransactions(int pageNumber, int pageSize) {
-        Sort.Order order = new Sort.Order(Sort.Direction.DESC, "registeredDate");
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by(order));
+        Page<Transaction> allTransaction = transactionRepository
+                .findAll(PageRequest.of(pageNumber - 1, pageSize, Sort.by(Sort.Direction.DESC, "transactionDate")));
 
-        Page<Transaction> allTransaction = repo.findAll(pageable);
-
-        PaginatedResponse response = PaginatedResponse.builder()
-                .patients(allTransaction.getContent())
+        return PaginatedResponse.builder()
+                .transactions(allTransaction.getContent())
                 .currentPage(allTransaction.getNumber())
                 .noOfPatients(allTransaction.getNumberOfElements())
                 .pageSize(allTransaction.getSize())
                 .build();
-
-        return response;
     }
 }

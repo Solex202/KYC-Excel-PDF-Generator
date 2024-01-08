@@ -1,4 +1,4 @@
-package com.example.lota_project.DynamicPDF;
+package com.example.lota_project.DynamicPDF.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

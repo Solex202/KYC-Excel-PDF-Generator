@@ -1,5 +1,9 @@
 package com.example.lota_project.DynamicPDF;
 
+import com.example.lota_project.DynamicPDF.model.DynamicPDF;
+import com.example.lota_project.DynamicPDF.model.Transaction;
+import com.example.lota_project.DynamicPDF.model.TransactionType;
+import com.example.lota_project.DynamicPDF.repository.TransactionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +16,7 @@ public class DynamicPdfApplication {
 		SpringApplication.run(DynamicPdfApplication.class, args);
 	}
 		@Bean
-		public CommandLineRunner runner(Repo repo) {
+		public CommandLineRunner runner(TransactionRepository transactionRepository) {
 			return args -> {
 				Transaction transaction = Transaction.builder()
 						.id("1")
@@ -32,8 +36,8 @@ public class DynamicPdfApplication {
 								.email("deola@email.com")
 								.build()).build();
 
-			repo.save(transaction);
-			repo.save(transaction1);
+			transactionRepository.save(transaction);
+			transactionRepository.save(transaction1);
 			};
 
 
