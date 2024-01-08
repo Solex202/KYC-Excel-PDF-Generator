@@ -1,0 +1,42 @@
+package com.example.lota_project.DynamicPDF;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+@SpringBootApplication
+public class DynamicPdfApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DynamicPdfApplication.class, args);
+	}
+		@Bean
+		public CommandLineRunner runner(Repo repo) {
+			return args -> {
+				Transaction transaction = Transaction.builder()
+						.id("1")
+						.transactionType(TransactionType.DEPOSIT)
+						.user(DynamicPDF.builder()
+								.id("1")
+								.name("John")
+								.email("lota@email.com")
+						.build()).build();
+
+				Transaction transaction1 = Transaction.builder()
+						.id("2")
+						.transactionType(TransactionType.WITHDRAWAL)
+						.user(DynamicPDF.builder()
+								.id("2")
+								.name("deola")
+								.email("deola@email.com")
+								.build()).build();
+
+			repo.save(transaction);
+			repo.save(transaction1);
+			};
+
+
+	}
+
+}
