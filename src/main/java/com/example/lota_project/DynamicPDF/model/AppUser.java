@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DynamicPDF {
+public class AppUser {
 
     @Id
     private String id;

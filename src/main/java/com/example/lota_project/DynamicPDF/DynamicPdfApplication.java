@@ -1,6 +1,6 @@
 package com.example.lota_project.DynamicPDF;
 
-import com.example.lota_project.DynamicPDF.model.DynamicPDF;
+import com.example.lota_project.DynamicPDF.model.AppUser;
 import com.example.lota_project.DynamicPDF.model.Transaction;
 import com.example.lota_project.DynamicPDF.model.TransactionType;
 import com.example.lota_project.DynamicPDF.repository.TransactionRepository;
@@ -21,7 +21,7 @@ public class DynamicPdfApplication {
 				Transaction transaction = Transaction.builder()
 						.id("1")
 						.transactionType(TransactionType.DEPOSIT)
-						.user(DynamicPDF.builder()
+						.user(AppUser.builder()
 								.id("1")
 								.name("John")
 								.email("lota@email.com")
@@ -30,7 +30,7 @@ public class DynamicPdfApplication {
 				Transaction transaction1 = Transaction.builder()
 						.id("2")
 						.transactionType(TransactionType.WITHDRAWAL)
-						.user(DynamicPDF.builder()
+						.user(AppUser.builder()
 								.id("2")
 								.name("deola")
 								.email("deola@email.com")
