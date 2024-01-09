@@ -1,6 +1,8 @@
 package com.example.lota_project.DynamicPDF;
 
+import com.example.lota_project.DynamicPDF.dtos.CreateTransactionRequest;
 import com.example.lota_project.DynamicPDF.dtos.PaginatedResponse;
+import com.example.lota_project.DynamicPDF.model.AppUser;
 import com.example.lota_project.DynamicPDF.model.Transaction;
 import com.example.lota_project.DynamicPDF.model.TransactionType;
 import com.example.lota_project.DynamicPDF.service.TransactionService;
@@ -10,7 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class DynamicPdfApplicationTests {
@@ -23,10 +28,12 @@ class DynamicPdfApplicationTests {
 
 	@Test
 	void testCreateTransaction() {
-		Transaction transaction = new Transaction();
-		transaction.setAmount(100.00);
-		transaction.setTransactionType(TransactionType.DEPOSIT);
-		transactionServiceImpl.createTransaction(transaction);
+		CreateTransactionRequest transaction = new CreateTransactionRequest();
+		transaction.setAmount(200.00);
+		transaction.setTransactionType(String.valueOf(TransactionType.WITHDRAWAL));
+		String res = transactionServiceImpl.createTransaction("659c0f434a09f44026fbe3b8",transaction);
+
+//		assertThat(res.equals("Transaction created successfully") );
 	}
 
 	@Test
@@ -34,7 +41,8 @@ class DynamicPdfApplicationTests {
 		Transaction transaction = new Transaction();
 		transaction.setAmount(100.00);
 		transaction.setTransactionType(TransactionType.DEPOSIT);
-		transactionServiceImpl.getTransaction("1");
+		Transaction t = transactionServiceImpl.getTransaction("1");
+		assertThat(t.getAmount(), is(0.0));
 	}
 
 	@Test
@@ -63,6 +71,15 @@ class DynamicPdfApplicationTests {
 	void testGetAllPaginatedTransactions() {
 		PaginatedResponse list =  transactionServiceImpl.getPaginatedTransactions(1, 10);
 		assertEquals(4, list.getNoOfPatients()) ;
+	}
+
+	@Test
+	void createUser(){
+		AppUser user = new AppUser();
+		user.setName("John");
+		user.setEmail("lota");
+
+		transactionServiceImpl.createUser(user);
 	}
 
 }
