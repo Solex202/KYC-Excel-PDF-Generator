@@ -3,7 +3,6 @@ package com.example.lota_project.DynamicPDF.controllers;
 import com.example.lota_project.DynamicPDF.service.ExcelDownloadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,7 @@ import java.io.ByteArrayInputStream;
 @RestController
 @RequestMapping("/transactions")
 @RequiredArgsConstructor
-public class GetTransactionRepository {
+public class KycAndTransactionController {
 
     private final ExcelDownloadService excelDownloadService;
 

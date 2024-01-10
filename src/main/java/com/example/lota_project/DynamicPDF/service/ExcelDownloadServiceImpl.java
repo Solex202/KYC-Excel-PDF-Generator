@@ -24,17 +24,16 @@ public class ExcelDownloadServiceImpl implements ExcelDownloadService{
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()){
             Sheet sheet = workbook.createSheet();
             var getKyc = transactionService.getPaginatedTransactions(page, size);
-            String[] headers = {"Name", "Email"};
+            String[] headers = {"Name", "Email", "transactionType", "Amount", "TransactionDate", "transactionTime", "TransactionId",};
             createHeader(headers, sheet, workbook);
             writeValueToExcelForAllTransactions(sheet, getKyc);
             workbook.write(outputStream);
             return new ByteArrayInputStream(outputStream.toByteArray());
 
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getStackTrace();
             throw new RuntimeException("Could not create sheet");
         }
-
     }
 
     private void writeValueToExcelForAllTransactions(Sheet sheet, PaginatedResponse getKyc) {
@@ -43,6 +42,10 @@ public class ExcelDownloadServiceImpl implements ExcelDownloadService{
             for (Transaction transaction : getKyc.getTransactions()) {
                 sheet.createRow(index + 1).createCell(0).setCellValue(transaction.getUser().getName());
                 sheet.getRow(index + 1).getCell(1, CREATE_NULL_AS_BLANK).setCellValue(transaction.getUser().getEmail());
+                sheet.getRow(index + 1).getCell(2, CREATE_NULL_AS_BLANK).setCellValue(transaction.getTransactionType().toString());
+                sheet.getRow(index + 1).getCell(3, CREATE_NULL_AS_BLANK).setCellValue(transaction.getAmount());
+                sheet.getRow(index + 1).getCell(4, CREATE_NULL_AS_BLANK).setCellValue(transaction.getTransactionDate().toLocalDate().toString());
+                sheet.getRow(index + 1).getCell(5, CREATE_NULL_AS_BLANK).setCellValue(transaction.getTransactionDate().toLocalTime().toString());
 
                 index++;
             }
