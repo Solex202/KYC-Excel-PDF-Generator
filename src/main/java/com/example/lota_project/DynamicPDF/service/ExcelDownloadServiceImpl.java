@@ -1,5 +1,6 @@
 package com.example.lota_project.DynamicPDF.service;
 
+import com.example.lota_project.DynamicPDF.dtos.PaginatedResponse;
 import com.example.lota_project.DynamicPDF.model.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -23,34 +24,26 @@ public class ExcelDownloadServiceImpl implements ExcelDownloadService{
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()){
             Sheet sheet = workbook.createSheet();
             var getKyc = transactionService.getPaginatedTransactions(page, size);
-            String[] headers = {""};
+            String[] headers = {"Name", "Email"};
             createHeader(headers, sheet, workbook);
-            writeValueToExcelForAllMerchants(sheet);
+            writeValueToExcelForAllTransactions(sheet, getKyc);
             workbook.write(outputStream);
             return new ByteArrayInputStream(outputStream.toByteArray());
 
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Could not create sheet");
-        };
+        }
 
-        return null;
     }
 
-    private void writeValueToExcelForAllMerchants(Sheet sheet) {
-
+    private void writeValueToExcelForAllTransactions(Sheet sheet, PaginatedResponse getKyc) {
 
             int index = 0;
-            for (Transaction transaction : merchants) {
-                sheet.createRow(index + 1).createCell(0).setCellValue(transaction.getFullName());
-                sheet.getRow(index + 1).getCell(1, CREATE_NULL_AS_BLANK).setCellValue(transaction.getId());
-                sheet.getRow(index + 1).getCell(2, CREATE_NULL_AS_BLANK).setCellValue(transaction.getUsername());
-                sheet.getRow(index + 1).getCell(3, CREATE_NULL_AS_BLANK).setCellValue(transaction.getPhoneNumber());
-                sheet.getRow(index + 1).getCell(4, CREATE_NULL_AS_BLANK).setCellValue(transaction.getServices());
-                var status = transaction.isDisabled() ? "InActive" : "Active";
-                sheet.getRow(index + 1).getCell(5, CREATE_NULL_AS_BLANK).setCellValue(status);
-                sheet.getRow(index + 1).getCell(6, CREATE_NULL_AS_BLANK).setCellValue(transaction.isKycVerified());
-                sheet.getRow(index + 1).getCell(7, CREATE_NULL_AS_BLANK).setCellValue(transaction.isEmailVerified());
+            for (Transaction transaction : getKyc.getTransactions()) {
+                sheet.createRow(index + 1).createCell(0).setCellValue(transaction.getUser().getName());
+                sheet.getRow(index + 1).getCell(1, CREATE_NULL_AS_BLANK).setCellValue(transaction.getUser().getEmail());
+
                 index++;
             }
         }

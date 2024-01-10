@@ -15,32 +15,32 @@ public class DynamicPdfApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DynamicPdfApplication.class, args);
 	}
-		@Bean
-		public CommandLineRunner runner(TransactionRepository transactionRepository) {
-			return args -> {
-				Transaction transaction = Transaction.builder()
-						.id("1")
-						.transactionType(TransactionType.DEPOSIT)
-						.user(AppUser.builder()
-								.id("1")
-								.name("John")
-								.email("lota@email.com")
-						.build()).build();
-
-				Transaction transaction1 = Transaction.builder()
-						.id("2")
-						.transactionType(TransactionType.WITHDRAWAL)
-						.user(AppUser.builder()
-								.id("2")
-								.name("deola")
-								.email("deola@email.com")
-								.build()).build();
-
-			transactionRepository.save(transaction);
-			transactionRepository.save(transaction1);
-			};
-
-
-	}
+//		@Bean
+//		public CommandLineRunner runner(TransactionRepository transactionRepository) {
+//			return args -> {
+//				Transaction transaction = Transaction.builder()
+//						.id("1")
+//						.transactionType(TransactionType.DEPOSIT)
+//						.user(AppUser.builder()
+//								.id("1")
+//								.name("John")
+//								.email("lota@email.com")
+//						.build()).build();
+//
+//				Transaction transaction1 = Transaction.builder()
+//						.id("2")
+//						.transactionType(TransactionType.WITHDRAWAL)
+//						.user(AppUser.builder()
+//								.id("2")
+//								.name("deola")
+//								.email("deola@email.com")
+//								.build()).build();
+//
+//			transactionRepository.save(transaction);
+//			transactionRepository.save(transaction1);
+//			};
+//
+//
+//	}
 
 }
